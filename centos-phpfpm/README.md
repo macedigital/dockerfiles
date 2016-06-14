@@ -2,6 +2,14 @@
 
 For running PHP 7.x projects with PHP-FPM on CentOS.
 
+## Installation
+
+Get the image from the Docker hub:
+
+````
+docker pull macedigital/phpfpm
+````
+
 ## Usage
 
 The image comes preconfigured to listen on port `9000` and serve files from `/var/www`
@@ -10,7 +18,7 @@ The image comes preconfigured to listen on port `9000` and serve files from `/va
 CONTAINER_NAME=myphpapp
 HOST_SOURCES=/path/to/project/sources
 HOST_PORT=9000
-docker run --name $CONTAINER_NAME -d --restart=always -v $HOST_SOURCES:/var/www -p $HOST_PORT:9000 macedigital/centos-phpfpm
+docker run --name $CONTAINER_NAME -d --restart=always -v $HOST_SOURCES:/var/www -p $HOST_PORT:9000 macedigital/phpfpm
 ````
 
 Above snippet will run the container with the name `myphpapp`, link the `/path/to/project/sources` and expose the FastCGI handler on host systems's port `9000`.
