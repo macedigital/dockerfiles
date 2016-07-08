@@ -50,3 +50,9 @@ The following modules are provided:
 - xml
 
 Please note that this base image is intended for *running* PHP applications.
+
+`# yum install php70w-devel php70w-phpdbg php70w-pecl-xdebug`
+
+Install these packages if you want to use the image for development and debugging.
+
+
