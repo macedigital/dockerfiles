@@ -31,7 +31,7 @@ RUN curl -SL http://mirrors.jenkins-ci.org/war-stable/latest/jenkins.war -o /opt
 
 EXPOSE 8080
 
-CMD ["java", "$JAVA_OPTS", "-jar" "/opt/jenkins.war"]
+CMD java ${JAVA_OPTS} -jar /opt/jenkins.war
 ````
 
 Please do not use this example in any production environment ;)
