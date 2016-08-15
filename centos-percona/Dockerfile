@@ -14,7 +14,7 @@ ADD my.cnf /etc/my.cnf
 ADD run.sh /bin/run.sh
 
 EXPOSE 3306
-VOLUME ["/var/lib/mysql"]
+VOLUME ["/var/lib/mysql", "/etc/my.cnf.d"]
 
 ENTRYPOINT ["run.sh"]
 CMD ["mysqld"]
