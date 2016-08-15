@@ -6,11 +6,10 @@ Dockerfile for building CentOS 7 containers running Percona-Server 5.7.x support
 
 The run script is based on the [offical MySQL docker-entrypoint.sh](https://github.com/docker-library/mysql/blob/master/5.7/docker-entrypoint.sh).
 
-The server `my.cnf` file is using some opiniated defaults:
+The server's `/etc/my.cnf` file is using some opiniated defaults:
 - use strict mode
 - prefer native aio for InnoDB table files
 - set timezone to UTC
 - set characterset to UTF-8.
 
-
-
+In order to customize settings you can provide configuration files in ini-format into the `/etc/my.cnf.d/` directory, which is available as a volume.
