@@ -1,5 +1,9 @@
 ## Oracle JRE 8.x server
 
+![](https://img.shields.io/docker/stars/macedigital/jre-server.svg "Docker stars")
+![](https://img.shields.io/docker/pulls/macedigital/jre-server.svg "Image pulls")
+[![](https://img.shields.io/docker/automated/macedigital/jre-server.svg)](https://hub.docker.com/r/macedigital/jre-server/ "Docker Hub page")
+
 Base image for building headless JVM applications using the server runtime from Oracle.
 
 To use this image or Dockerfile, you *must* accept the [Oracle Binary Code License Agreement](http://www.oracle.com/technetwork/java/javase/terms/license/index.html) for Java SE!
