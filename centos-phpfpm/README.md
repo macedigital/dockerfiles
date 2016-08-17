@@ -1,5 +1,10 @@
 # PHP-FPM 7.x on CentOS 7
 
+[![](https://images.microbadger.com/badges/image/macedigital/phpfpm.svg)](https://microbadger.com/images/macedigital/phpfpm "Get your own image badge on microbadger.com")
+![](https://img.shields.io/docker/stars/macedigital/phpfpm.svg "Docker stars")
+![](https://img.shields.io/docker/pulls/macedigital/phpfpm.svg "Image pulls")
+[![](https://img.shields.io/docker/automated/macedigital/phpfpm.svg)](https://hub.docker.com/r/macedigital/phpfpm/ "Docker Hub page")
+
 For running PHP 7.x projects with PHP-FPM on CentOS.
 
 ## Installation
