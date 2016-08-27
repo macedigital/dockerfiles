@@ -8,7 +8,7 @@ Dockerfile for building CentOS 7 containers running Percona-Server 5.7.x support
 
 [For the TokuDB engine to work, Transparent HugePages must be disabled](https://www.percona.com/blog/2014/07/23/why-tokudb-hates-transparent-hugepages/). This is a known limitation at the moment.
 
-The run script is based on the [offical MySQL docker-entrypoint.sh](https://github.com/docker-library/mysql/blob/master/5.7/docker-entrypoint.sh).
+The run script is based on the [offical MySQL docker-entrypoint.sh](https://github.com/docker-library/mysql/blob/master/5.7/docker-entrypoint.sh), which comes with plentyful options for creating initial databases.
 
 The server's `/etc/my.cnf` file is using some opiniated defaults:
 - use strict mode
