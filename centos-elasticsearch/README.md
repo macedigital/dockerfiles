@@ -1,5 +1,7 @@
 # Elasticsearch on CentOS
 
+[![](https://img.shields.io/docker/automated/macedigital/elasticsearch.svg)](https://hub.docker.com/r/macedigital/elasticsearch/ "Docker Hub page")
+
 Elasticsearch 2.3.x on CentOS 7.2 Docker image. 
 
 ## Usage
