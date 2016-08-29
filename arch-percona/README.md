@@ -1,3 +1,0 @@
-# ArchLinux - Percona MySQL-Server
-
-
