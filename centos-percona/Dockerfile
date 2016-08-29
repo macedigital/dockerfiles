@@ -3,10 +3,9 @@ FROM centos:7
 MAINTAINER Matthias Adler <macedigital@gmail.com>
 
 # Setup packages for installing TokuDB engine
-RUN yum update -y \
-    && rpmkeys --import https://www.percona.com/downloads/percona-release/RPM-GPG-KEY-percona \
+RUN rpmkeys --import https://www.percona.com/downloads/percona-release/RPM-GPG-KEY-percona \
     && yum install -y https://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm \
-    && yum install -y Percona-Server-tokudb-57 which policycoreutils \
+    && yum install -y Percona-Server-tokudb-57 \
     && yum clean all
 
 # Configure Percona
