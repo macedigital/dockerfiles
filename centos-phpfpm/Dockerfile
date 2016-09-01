@@ -22,22 +22,11 @@ RUN yum install -y epel-release https://mirror.webtatic.com/yum/el7/webtatic-rel
          php70w-xml \
     && yum clean all
 
-RUN sed -i s"/listen = 127.0.0.1/listen = 0.0.0.0/" /etc/php-fpm.d/www.conf \
-  && sed -i s"/listen.allowed_clients = 127.0.0.1/;listen.allowed_clients = any/" /etc/php-fpm.d/www.conf \
-  && sed -i s"/;pm.status_path/pm.status_path/" /etc/php-fpm.d/www.conf \
-  && sed -i s"/;ping.path/ping.path/" /etc/php-fpm.d/www.conf \
-  && sed -i s"/;catch_workers_output/catch_workers_output/" /etc/php-fpm.d/www.conf \
-  && sed -i s"/;chdir/chdir/" /etc/php-fpm.d/www.conf \
-  && sed -i s"/;env/env/" /etc/php-fpm.d/www.conf \
-  && sed -i s"/slowlog/;slowlog/" /etc/php-fpm.conf \
-  && sed -i s"/error_log = \/var\/log\/php-fpm\/error.log/error_log = syslog/" /etc/php-fpm.conf \
-  && sed -i s"/^php_admin_value/;php_admin_value/" /etc/php-fpm.d/www.conf \
-  && sed -i s"/^php_admin_flag/;php_admin_flag/" /etc/php-fpm.d/www.conf \
-  && sed -i s"/;date.timezone =/date.timezone = UTC/" /etc/php.ini \
-  && mkdir -p /var/lib/php/{session,wsdlcache} \
-  && chown -R apache:apache /var/lib/php
+COPY php-fpm.conf /etc/php-fpm.conf
+COPY www.conf /etc/php-fpm.d/www.conf
+
+RUN mkdir -p /var/lib/php/{session,wsdlcache} && chown -R apache:apache /var/lib/php
 
 EXPOSE 9000
-VOLUME /var/www
 
 CMD ["php-fpm", "-F", "-O"]
