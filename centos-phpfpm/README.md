@@ -5,7 +5,7 @@
 ![](https://img.shields.io/docker/pulls/macedigital/phpfpm.svg "Image pulls")
 [![](https://img.shields.io/docker/automated/macedigital/phpfpm.svg)](https://hub.docker.com/r/macedigital/phpfpm/ "Docker Hub page")
 
-For running PHP projects with PHP-FPM on CentOS with packages from the [Webtatic PHP repository](https://webtatic.com/).
+For running PHP projects with PHP-FPM on CentOS.
 
 ## Usage
 
@@ -17,15 +17,15 @@ docker pull macedigital/phpfpm
 
 ### Available tags:
 
-`macedigital/phpfpm:7.0`: Provides PHP 7.0.x
+`macedigital/phpfpm:latest`: Latest usable PHP version + possibly different configuration options than the tagged images use.
 
-`macedigital/phpfpm:5.6`: Provides PHP 6.5.x
+`macedigital/phpfpm:7.0`: Provides latest stable PHP 7.0.x version.
 
-Omitting a tag pulls in the latest PHP version, which may or may not be what you want (as it depends greatly on the application you're going to run).
+`macedigital/phpfpm:5.6`: Provides latest stable PHP 6.5.x version.
+
+All images come preconfigured to listen on port `9000`, serve files from `/var/www`, and set the default timezone to `UTC`.
 
 ### Example
-
-The image comes preconfigured to listen on port `9000` and serve files from `/var/www`
 
 ````bash
 CONTAINER_NAME=myphpapp
@@ -34,14 +34,32 @@ HOST_PORT=9000
 docker run --name $CONTAINER_NAME -d --restart=always -v $HOST_SOURCES:/var/www -p $HOST_PORT:9000 macedigital/phpfpm
 ````
 
-Above snippet will run the container with the name `myphpapp`, link the `/path/to/project/sources` and expose the FastCGI handler on host systems's port `9000`.
+Above snippet will run the container with the name `myphpapp`, link the `/path/to/project/sources` folder and expose the FastCGI handler on host systems's port `9000`.
 On failure (e.g. a segfaulting PHP-FPM master process) the whole container will be restarted.
 
-Now, all you need is a web-server with fastcgi capabilities, e.g. [nginx](http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html), and proxy requests.
+Now, all you need is a web-server with fastcgi capabilities, e.g. [nginx](http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html), and proxy requests:
+
+````nginx
+server {
+    listen 80;
+    
+    # other config options 
+    
+    location ~ \.php$ {
+        # it's the path inside the container
+        root /var/www;
+        # change IP address :)
+        fastcgi_pass 172.17.0.1:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+````
 
 ## Available modules
 
-The image uses PHP packages from the https://webtatic.com repository.
+The image uses PHP packages from the [Webtatic PHP repository](https://webtatic.com/).
 
 The following modules are provided:
 - bcmath
