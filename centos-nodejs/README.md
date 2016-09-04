@@ -24,6 +24,12 @@ The container will be discarded after it finished running so make sure build & c
 
 At the moment, the following build arguments are supported:
 
-`NODE_VERSION`: Specify which version to use (defaults to '6.4.0').
+`NODE_VERSION`: Specify which version to use (defaults to '6.5.0').
 
 `NODE_ENV`: Set environment (defaults to 'production').
+
+`NODE_HOME`: Working directory and path for exported volume (defaults to '/srv').
+
+`NODE_USER`: Effective use when running a container (defaults to 'nobody').
+
+`NPM_LOGLEVEL`: Verbosity of npm commands (defaults to 'warn').

@@ -13,21 +13,27 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-keys \
 
 ARG NODE_VERSION=6.5.0
 ARG NODE_ENV=production
+ARG NODE_HOME=/srv
+ARG NODE_USER=nobody
+ARG NPM_LOGLEVEL=warn
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
     && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
     && gpg --verify SHASUMS256.txt.asc \
     && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt.asc | sha256sum -c - \
     && tar -xf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
-    && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc
+    && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc \
+    && mkdir -p ${NODE_HOME} && chown -R ${NODE_USER} ${NODE_HOME}
 
-ENV NPM_CONFIG_LOGLEVEL info
+ENV NPM_CONFIG_LOGLEVEL ${NPM_LOGLEVEL}
 ENV NODE_VERSION ${NODE_VERSION}
 ENV NODE_ENV ${NODE_ENV}
-ENV HOME /srv
+ENV HOME ${NODE_HOME}
 
-WORKDIR /srv
+WORKDIR ${NODE_HOME}
 
-VOLUME [ "/srv" ]
+VOLUME [ "${NODE_HOME}" ]
+
+USER ${NODE_USER}
 
 CMD [ "node" ]
