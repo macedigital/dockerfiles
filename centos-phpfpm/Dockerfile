@@ -29,4 +29,6 @@ RUN mkdir -p /var/lib/php/{session,wsdlcache} && chown -R apache:apache /var/lib
 
 EXPOSE 9000
 
+VOLUME [ "/var/www" ]
+
 CMD ["php-fpm", "-F", "-O"]
