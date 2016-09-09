@@ -1,0 +1,22 @@
+# DEMO: rethinkdb-cluster with proxy gateway node
+version: '2'
+services:
+  rethinkdb_master:
+    image: macedigital/rethinkdb
+    container_name: rethinkdb_master
+    command: [ "--no-http-admin" ]
+
+  rethinkdb_replica:
+    image: macedigital/rethinkdb
+    depends_on:
+      - rethinkdb_master
+    command: [ "--join rethinkdb_master", "--no-http-admin" ]
+
+  rethinkdb_proxy:
+    image: macedigital/rethinkdb
+    ports:
+      - 8080:8080 # http admin
+      - 28015:28015 # client driver
+    depends_on:
+      - rethinkdb_master
+    command: [ "proxy", "--join rethinkdb_master" ]
