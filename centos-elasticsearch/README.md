@@ -1,8 +1,9 @@
 # Elasticsearch on CentOS
 
+[![](https://images.microbadger.com/badges/image/macedigital/elasticsearch.svg)](https://microbadger.com/images/macedigital/elasticsearch "Get your own image badge on microbadger.com")
 [![](https://img.shields.io/docker/automated/macedigital/elasticsearch.svg)](https://hub.docker.com/r/macedigital/elasticsearch/ "Docker Hub page")
 
-Elasticsearch 2.3.x on CentOS 7.2 Docker image. 
+Elasticsearch 2.x on CentOS 7.2 Docker image. 
 
 ## Usage
 

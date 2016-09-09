@@ -1,7 +1,6 @@
 # Percona-Server with TokuDB engine
 
-![](https://img.shields.io/docker/stars/macedigital/percona.svg "Docker stars")
-![](https://img.shields.io/docker/pulls/macedigital/percona.svg "Image pulls")
+[![](https://images.microbadger.com/badges/image/macedigital/percona.svg)](https://microbadger.com/images/macedigital/percona "Get your own image badge on microbadger.com")
 [![](https://img.shields.io/docker/automated/macedigital/percona.svg)](https://hub.docker.com/r/macedigital/percona/ "Docker Hub page")
 
 Dockerfile for building CentOS 7 containers running Percona-Server 5.7.x supporting the [TokuDB engine](https://www.percona.com/software/mysql-database/percona-tokudb).

@@ -1,5 +1,8 @@
 # Node.js on CentOS
 
+[![](https://images.microbadger.com/badges/image/macedigital/nodejs.svg)](https://microbadger.com/images/macedigital/nodejs "Get your own image badge on microbadger.com")
+[![](https://img.shields.io/docker/automated/macedigital/nodejs.svg)](https://hub.docker.com/r/macedigital/nodejs/ "Docker Hub page")
+
 Base image for nodejs-based apps in a CentOS:7 container.
 
 ## Usage

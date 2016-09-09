@@ -1,5 +1,8 @@
 # nginx + http/2 + brotli_static
 
+[![](https://images.microbadger.com/badges/image/macedigital/nginx.svg)](https://microbadger.com/images/macedigital/nginx "Get your own image badge on microbadger.com")
+[![](https://img.shields.io/docker/automated/macedigital/nginx.svg)](https://hub.docker.com/r/macedigital/nginx/ "Docker Hub page")
+
 Latest nginx mainline with HTTP/2 and static brotli compression support.
 
 Build instructions are based on [offical nginx Dockerfile](https://github.com/nginxinc/docker-nginx/blob/e117bd83e9befe5582bc1da8f72248398fffa16c/mainline/alpine/Dockerfile) and [Alpine package script](http://git.alpinelinux.org/cgit/aports/tree/main/nginx/APKBUILD). 
