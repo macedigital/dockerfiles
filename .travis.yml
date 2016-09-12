@@ -1,0 +1,26 @@
+# vim:set et ts=2 sw=2:
+
+language: bash
+services: docker
+
+env:
+  - DISTRO=alpine PRODUCT=nginx
+  - DISTRO=alpine PRODUCT=nodejs
+  - DISTRO=centos PRODUCT=percona
+  - DISTRO=centos PRODUCT=phpfpm
+  - DISTRO=centos PRODUCT=elasticsearch
+
+install:
+  - git clone https://github.com/docker-library/official-images.git ~/official-images
+
+before_script:
+  - env | sort
+  - image="macedigital/$DISTRO-$PRODUCT"
+
+script:
+  - docker built -t "$image" "$DISTRO-$PRODUCT"
+  - ~/official-images/test/run.sh "$image"
+
+after_script:
+  - docker images
+
