@@ -22,4 +22,4 @@ VOLUME [ "/usr/share/elasticsearch/conf", "/var/lib/elasticsearch/data" ]
 
 EXPOSE 9200 9300
 
-ENTRYPOINT ["/usr/share/elasticsearch/bin/run.sh"]
+CMD [ "/usr/share/elasticsearch/bin/run.sh" ]
