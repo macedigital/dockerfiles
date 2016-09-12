@@ -15,7 +15,7 @@ install:
 
 before_script:
   - env | sort
-  - image="macedigital/$DISTRO-$PRODUCT"
+  - image="$PRODUCT:$DISTRO"
 
 script:
   - docker built -t "$image" "$DISTRO-$PRODUCT"

@@ -1,4 +1,4 @@
-FROM macedigital/jre-server:jdk
+FROM macedigital/jre-server:alpine
 
 # Build arguments
 ARG JENKINS_VERSION=2.7.4
