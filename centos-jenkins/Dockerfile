@@ -1,7 +1,7 @@
 FROM macedigital/jre-server
 
 # Build arguments
-ARG JENKINS_VERSION=2.7.3
+ARG JENKINS_VERSION=2.7.4
 ARG JENKINS_HOME=/var/lib/jenkins
 ARG JENKINS_USER=jenkins
 ARG JENKINS_GROUP=jenkins
