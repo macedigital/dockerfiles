@@ -124,6 +124,4 @@ EOSQL
 
 fi
 
-[[ -f "/etc/sysconfig/mysql" ]] && . /etc/sysconfig/mysql
-
 exec "$@"
