@@ -1,4 +1,4 @@
-FROM macedigital/jre-server:alpine
+FROM alpine:edge
 
 # Build arguments
 ARG JENKINS_VERSION=2.7.4
@@ -13,7 +13,7 @@ ARG JENKINS_URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-w
 # weak key signing: https://issues.jenkins-ci.org/browse/INFRA-717
 RUN addgroup -g ${JENKINS_GID} ${JENKINS_GROUP} \
     && adduser -H -D -h "$JENKINS_HOME" -u ${JENKINS_UID} -G ${JENKINS_GROUP} -s /sbin/nologin ${JENKINS_USER} \
-    && apk -U --no-cache add ttf-dejavu git \
+    && apk -U --no-cache add openjdk8 ttf-dejavu git \
     && apk add --no-cache --virtual .build-deps curl gpgme \
     && export GNUPGHOME="$(mktemp -d)" \
     && gpg --keyserver keys.gnupg.net --recv-keys D50582E6 \
@@ -22,7 +22,7 @@ RUN addgroup -g ${JENKINS_GID} ${JENKINS_GROUP} \
     && curl -SL ${JENKINS_URL}.asc -o /usr/share/jenkins/jenkins.war.asc \
     && gpg --verify /usr/share/jenkins/jenkins.war.asc \
     && echo "$(curl -SL ${JENKINS_URL}.sha1)  /usr/share/jenkins/jenkins.war" | sha1sum -c - \
-    && rm /usr/share/jenkins/jenkins.war.asc \
+    && rm -r /usr/share/jenkins/jenkins.war.asc "$GNUPGHOME" \
     && chown -R root:root /usr/share/jenkins \
     && mkdir -p /var/lib/jenkins \
     && chown -R ${JENKINS_USER} /var/lib/jenkins \
