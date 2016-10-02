@@ -37,6 +37,6 @@ docker run -d -p 80:80 --name=nginx --memory=64MB macedigital/nginx
 
 ## TODO / IDEAS
 - Check compiler settings (security/code optimization)
-- Rethink stdout/stderr redirection for logs
-- Setup cache folders as tmpfs / shm
-- Consistent UID/GID combo
+- ~~Rethink stdout/stderr redirection for logs~~ Customizable via `docker run` options
+- ~~Setup cache folders as tmpfs / shm~~ Can be achieved via `docker run` options
+- ~~Consistent UID/GID combo~~ Workers run with UID 99 which corresponds to user `nobody` on most distros.

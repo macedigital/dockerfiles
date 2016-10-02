@@ -54,11 +54,13 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--add-dynamic-module=/usr/src/nginx-rtmp-module-$RTMP_VERSION \
 		--add-dynamic-module=/usr/src/headers-more-nginx-module-$HEADERS_MORE_VERSION \
 	" \
-	&& addgroup -S nginx \
-	&& adduser -D -S -H -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
+	&& addgroup -g 99 -S nginx \
+	&& adduser -D -S -H -h /var/cache/nginx -u 99 -s /sbin/nologin -G nginx nginx \
+	&& apk upgrade -U --no-cache \
 	&& apk add --no-cache --virtual .build-deps \
 		gcc \
 		git \
+		file \
 		libc-dev \
 		make \
 		pcre-dev \
@@ -70,12 +72,12 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		gd-dev \
 		geoip-dev \
 		perl-dev \
-	&& curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
-	&& curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
-	&& curl -fSL http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$LIBRESSL_VERSION.tar.gz -o libressl.tar.gz \
-    && curl -fSL http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$LIBRESSL_VERSION.tar.gz.asc -o libressl.tar.gz.asc \
-    && curl -fSL https://github.com/arut/nginx-rtmp-module/archive/v$RTMP_VERSION.tar.gz -o rtmp.tar.gz \
-    && curl -fSL https://github.com/openresty/headers-more-nginx-module/archive/v$HEADERS_MORE_VERSION.tar.gz -o headers.tar.gz \
+	&& curl -fSLq https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
+	&& curl -fSLq https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
+	&& curl -fSLq http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$LIBRESSL_VERSION.tar.gz -o libressl.tar.gz \
+    && curl -fSLq http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$LIBRESSL_VERSION.tar.gz.asc -o libressl.tar.gz.asc \
+    && curl -fSLq https://github.com/arut/nginx-rtmp-module/archive/v$RTMP_VERSION.tar.gz -o rtmp.tar.gz \
+    && curl -fSLq https://github.com/openresty/headers-more-nginx-module/archive/v$HEADERS_MORE_VERSION.tar.gz -o headers.tar.gz \
 	&& export GNUPGHOME="$(mktemp -d)" \
 	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$NGINX_GPG_KEYS" "$LIBRESSL_GPG_KEYS" \
 	&& gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
@@ -128,8 +130,8 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 			| sort -u \
 	)" \
 	&& apk add --no-cache --virtual .nginx-rundeps $runDeps \
-	&& apk del .build-deps \
-	&& apk del .gettext \
+	&& apk del .build-deps --purge \
+	&& apk del .gettext --purge \
 	&& mv /tmp/envsubst /usr/local/bin/ \
 	\
 	# fix path to html files in nginx.conf
