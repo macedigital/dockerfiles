@@ -2,7 +2,7 @@ FROM centos:7
 MAINTAINER Matthias Adler <macedigital@gmail.com>
 
 RUN yum install -y epel-release https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
-    && yum install --enablerepo=webtatic-testing -y \
+    && yum install -y --enablerepo=webtatic-testing \
          php70w-bcmath \
          php70w-fpm \
          php70w-gd \
@@ -29,5 +29,7 @@ COPY www.conf /etc/php-fpm.d/www.conf
 RUN mkdir -p /var/lib/php/{session,wsdlcache} && chown -R apache:apache /var/lib/php
 
 EXPOSE 9000
+
+VOLUME [ "/var/www" ]
 
 CMD ["php-fpm", "-F", "-O"]
