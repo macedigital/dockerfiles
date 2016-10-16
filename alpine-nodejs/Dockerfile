@@ -6,7 +6,7 @@ ENV NPM_CONFIG_PROGRESS 1
 ENV NPM_CONFIG_LOGLEVEL warn
 ENV HOME /srv
 
-RUN apk -U --no-cache add nodejs && chown nobody ${HOME}
+RUN apk -U --no-cache upgrade && apk --no-cache add nodejs && chown nobody ${HOME}
 
 USER nobody
 
