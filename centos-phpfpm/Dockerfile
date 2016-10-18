@@ -1,7 +1,8 @@
 FROM centos:7
 MAINTAINER Matthias Adler <macedigital@gmail.com>
 
-RUN yum install -y epel-release https://mirror.webtatic.com/yum/el7/webtatic-release.rpm && yum install -y \
+RUN yum install -y epel-release https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
+    && yum install -y --enablerepo=webtatic-testing \
         php56w-bcmath \
         php56w-fpm \
         php56w-gd \
