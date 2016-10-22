@@ -1,8 +1,6 @@
 FROM alpine:edge
 
 RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
-    LIBRESSL_GPG_KEYS=A1EB079B8D3EB92B4EBD3139663AF51BD5E4D8D5 \
-    LIBRESSL_VERSION=2.5.0 \
     NGINX_VERSION=1.11.5 \
     RTMP_VERSION=1.1.10 \
     HEADERS_MORE_VERSION=0.31 \
@@ -49,7 +47,6 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--with-http_v2_module \
 		--with-ipv6 \
 		--with-pcre-jit \
-		--with-openssl=/usr/src/libressl-$LIBRESSL_VERSION \
 		--add-module=/usr/src/ngx_brotli \
 		--add-dynamic-module=/usr/src/nginx-rtmp-module-$RTMP_VERSION \
 		--add-dynamic-module=/usr/src/headers-more-nginx-module-$HEADERS_MORE_VERSION \
@@ -58,13 +55,12 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& adduser -D -S -H -h /var/cache/nginx -u 99 -s /sbin/nologin -G nginx nginx \
 	&& apk upgrade -U --no-cache \
 	&& apk add --no-cache --virtual .build-deps \
-		gcc \
+	    build-base \
+	    file \
 		git \
-		file \
-		libc-dev \
-		make \
 		pcre-dev \
 		zlib-dev \
+		libressl-dev \
 		linux-headers \
 		curl \
 		gnupg \
@@ -74,22 +70,17 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		perl-dev \
 	&& curl -fSLq https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
 	&& curl -fSLq https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
-	&& curl -fSLq http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$LIBRESSL_VERSION.tar.gz -o libressl.tar.gz \
-    && curl -fSLq http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$LIBRESSL_VERSION.tar.gz.asc -o libressl.tar.gz.asc \
     && curl -fSLq https://github.com/arut/nginx-rtmp-module/archive/v$RTMP_VERSION.tar.gz -o rtmp.tar.gz \
     && curl -fSLq https://github.com/openresty/headers-more-nginx-module/archive/v$HEADERS_MORE_VERSION.tar.gz -o headers.tar.gz \
 	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$NGINX_GPG_KEYS" "$LIBRESSL_GPG_KEYS" \
+	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$NGINX_GPG_KEYS" \
 	&& gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
-	&& gpg --batch --verify libressl.tar.gz.asc libressl.tar.gz \
-	&& rm -r "$GNUPGHOME" nginx.tar.gz.asc libressl.tar.gz.asc \
+	&& rm -r "$GNUPGHOME" nginx.tar.gz.asc \
 	&& mkdir -p /usr/src \
 	&& tar -zxC /usr/src -f nginx.tar.gz \
-	&& tar -zxC /usr/src -f libressl.tar.gz \
 	&& tar -zxC /usr/src -f rtmp.tar.gz \
 	&& tar -zxC /usr/src -f headers.tar.gz \
 	&& rm nginx.tar.gz \
-	&& rm -R libressl* \
 	&& rm rtmp.tar.gz \
 	&& rm headers.tar.gz \
 	&& cd /usr/src \
