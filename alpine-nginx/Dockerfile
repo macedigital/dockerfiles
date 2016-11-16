@@ -1,9 +1,9 @@
 FROM alpine:edge
 
 RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
-    NGINX_VERSION=1.11.5 \
+    NGINX_VERSION=1.11.6 \
     RTMP_VERSION=1.1.10 \
-    HEADERS_MORE_VERSION=0.31 \
+    HEADERS_MORE_VERSION=0.32 \
 	&& NGINX_CONF="\
 		--prefix=/etc/nginx \
 		--sbin-path=/usr/sbin/nginx \
