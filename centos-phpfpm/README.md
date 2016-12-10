@@ -19,6 +19,8 @@ docker pull macedigital/phpfpm
 
 `macedigital/phpfpm:latest`: Latest usable PHP version + possibly different configuration options than the tagged images use.
 
+`macedigital/phpfpm:7.1`: Provides latest stable PHP 7.1.x version.
+
 `macedigital/phpfpm:7.0`: Provides latest stable PHP 7.0.x version.
 
 `macedigital/phpfpm:5.6`: Provides latest stable PHP 6.5.x version.
@@ -42,9 +44,9 @@ Now, all you need is a web-server with fastcgi capabilities, e.g. [nginx](http:/
 ````nginx
 server {
     listen 80;
-    
-    # other config options 
-    
+
+    # other config options
+
     location ~ \.php$ {
         # it's the path inside the container
         root /var/www;
@@ -116,4 +118,5 @@ pecl install -f pecl/solr && echo "extension=solr.so" > /etc/php.d/solr.ini
 
 ## Issues & Feedback
 
-If you have any issue, you can post in the github issue tracker. Please use the `phpfpm` label when doing so. 
+If you have any issue, you can post in the github issue tracker. Please use the `phpfpm` label when doing so.
+
