@@ -1,7 +1,7 @@
 FROM alpine:edge
 
 RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
-    NGINX_VERSION=1.11.6 \
+    NGINX_VERSION=1.11.7 \
     RTMP_VERSION=1.1.10 \
     HEADERS_MORE_VERSION=0.32 \
 	&& NGINX_CONF="\
@@ -85,6 +85,8 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& rm headers.tar.gz \
 	&& cd /usr/src \
 	&& git clone https://github.com/google/ngx_brotli.git \
+        && cd /usr/src/ngx_brotli \
+        && git submodule update --init \
 	&& cd /usr/src/nginx-$NGINX_VERSION \
 	&& export NGX_BROTLI_STATIC_MODULE_ONLY=1 \
 	&& ./configure $NGINX_CONF \
