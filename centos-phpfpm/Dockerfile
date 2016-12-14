@@ -3,24 +3,24 @@ MAINTAINER Matthias Adler <macedigital@gmail.com>
 
 RUN yum install -y epel-release https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
     && yum install -y --enablerepo=webtatic-testing \
-         php70w-bcmath \
-         php70w-fpm \
-         php70w-gd \
-         php70w-imap \
-         php70w-intl \
-         php70w-ldap \
-         php70w-mbstring \
-         php70w-mcrypt \
-         php70w-mysqlnd \
-         php70w-opcache \
-         php70w-pdo \
-         php70w-pecl-apcu \
-         php70w-pecl-imagick \
-         php70w-pgsql \
-         php70w-process \
-         php70w-recode \
-         php70w-soap \
-         php70w-xml \
+         php71w-bcmath \
+         php71w-fpm \
+         php71w-gd \
+         php71w-imap \
+         php71w-intl \
+         php71w-ldap \
+         php71w-mbstring \
+         php71w-mcrypt \
+         php71w-mysqlnd \
+         php71w-opcache \
+         php71w-pdo \
+         php71w-pecl-apcu \
+         php71w-pecl-imagick \
+         php71w-pgsql \
+         php71w-process \
+         php71w-recode \
+         php71w-soap \
+         php71w-xml \
     && yum clean all
 
 COPY php-fpm.conf /etc/php-fpm.conf
