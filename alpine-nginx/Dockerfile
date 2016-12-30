@@ -1,7 +1,7 @@
 FROM alpine:edge
 
 RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
-    NGINX_VERSION=1.11.7 \
+    NGINX_VERSION=1.11.8 \
     RTMP_VERSION=1.1.10 \
     HEADERS_MORE_VERSION=0.32 \
 	&& NGINX_CONF="\
@@ -40,12 +40,15 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--with-stream=dynamic \
 		--with-stream_ssl_module \
 		--with-stream_geoip_module=dynamic \
+		--with-stream_realip_module \
+		--with-stream_ssl_preread_module \
 		--with-http_slice_module \
 		--with-mail=dynamic \
 		--with-mail_ssl_module \
 		--with-file-aio \
 		--with-http_v2_module \
 		--with-ipv6 \
+		--with-pcre \
 		--with-pcre-jit \
 		--add-module=/usr/src/ngx_brotli \
 		--add-dynamic-module=/usr/src/nginx-rtmp-module-$RTMP_VERSION \
@@ -63,7 +66,7 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		libressl-dev \
 		linux-headers \
 		curl \
-		gnupg \
+		gnupg1 \
 		libxslt-dev \
 		gd-dev \
 		geoip-dev \
