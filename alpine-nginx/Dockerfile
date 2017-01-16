@@ -1,9 +1,11 @@
-FROM alpine:edge
+FROM alpine:3.5
 
 RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     NGINX_VERSION=1.11.8 \
     RTMP_VERSION=1.1.10 \
     HEADERS_MORE_VERSION=0.32 \
+    NGINX_UID=99 \
+    NGINX_USER=nginx \
 	&& NGINX_CONF="\
 		--prefix=/etc/nginx \
 		--sbin-path=/usr/sbin/nginx \
@@ -50,13 +52,13 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--with-ipv6 \
 		--with-pcre \
 		--with-pcre-jit \
+		--with-compat \
 		--add-module=/usr/src/ngx_brotli \
 		--add-dynamic-module=/usr/src/nginx-rtmp-module-$RTMP_VERSION \
 		--add-dynamic-module=/usr/src/headers-more-nginx-module-$HEADERS_MORE_VERSION \
 	" \
-	&& addgroup -g 99 -S nginx \
-	&& adduser -D -S -H -h /var/cache/nginx -u 99 -s /sbin/nologin -G nginx nginx \
-	&& apk upgrade -U --no-cache \
+	&& addgroup -g $NGINX_UID -S $NGINX_USER \
+	&& adduser -D -S -H -h /var/cache/nginx -u $NGINX_UID -s /sbin/nologin -G $NGINX_USER $NGINX_USER \
 	&& apk add --no-cache --virtual .build-deps \
 	    build-base \
 	    file \
@@ -129,6 +131,9 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& apk del .build-deps --purge \
 	&& apk del .gettext --purge \
 	&& mv /tmp/envsubst /usr/local/bin/ \
+	\
+	# add config for loading dynamic modules
+	&& for module in /etc/nginx/modules/*.so;do echo "#load_module modules/$module;" >> /etc/nginx/conf.d/modules.conf; done \
 	\
 	# fix path to html files in nginx.conf
 	&& sed -i "s/root   html;/root \/usr\/share\/nginx\/html;/" /etc/nginx/nginx.conf \
