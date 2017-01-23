@@ -1,7 +1,7 @@
 FROM alpine:edge
 
 # Build arguments
-ARG JENKINS_VERSION=2.7.4
+ARG JENKINS_VERSION=2.32.1
 ARG JENKINS_HOME=/var/lib/jenkins
 ARG JENKINS_USER=jenkins
 ARG JENKINS_GROUP=jenkins
@@ -14,7 +14,7 @@ ARG JENKINS_URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-w
 RUN addgroup -g ${JENKINS_GID} ${JENKINS_GROUP} \
     && adduser -H -D -h "$JENKINS_HOME" -u ${JENKINS_UID} -G ${JENKINS_GROUP} -s /sbin/nologin ${JENKINS_USER} \
     && apk -U --no-cache add openjdk8 ttf-dejavu git \
-    && apk add --no-cache --virtual .build-deps curl gpgme \
+    && apk add --no-cache --virtual .build-deps curl gnupg1 \
     && export GNUPGHOME="$(mktemp -d)" \
     && gpg --keyserver keys.gnupg.net --recv-keys D50582E6 \
     && mkdir -p /usr/share/jenkins -p \
@@ -26,7 +26,8 @@ RUN addgroup -g ${JENKINS_GID} ${JENKINS_GROUP} \
     && chown -R root:root /usr/share/jenkins \
     && mkdir -p /var/lib/jenkins \
     && chown -R ${JENKINS_USER} /var/lib/jenkins \
-    && apk del .build-deps
+    && apk del .build-deps \
+    && rm -r /var/cache/apk
 
 # Runtime environment
 ENV JENKINS_VERSION ${JENKINS_VERSION}
