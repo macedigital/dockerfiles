@@ -1,6 +1,5 @@
 # Base image for running JVM based applications
 FROM centos:7
-MAINTAINER Matthias Adler <macedigital@gmail.com>
 
 ARG VERSION=8
 ARG UPDATE=112

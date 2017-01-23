@@ -1,5 +1,4 @@
 FROM centos:7
-MAINTAINER Matthias Adler <macedigital@gmail.com>
 
 RUN yum install -y epel-release https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
     && yum install -y --enablerepo=webtatic-testing \
