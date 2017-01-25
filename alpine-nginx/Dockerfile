@@ -1,7 +1,7 @@
 FROM alpine:edge
 
 RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
-    NGINX_VERSION=1.11.8 \
+    NGINX_VERSION=1.11.9 \
     RTMP_VERSION=1.1.10 \
     HEADERS_MORE_VERSION=0.32 \
     NGINX_UID=99 \
@@ -34,7 +34,6 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--with-http_random_index_module \
 		--with-http_secure_link_module \
 		--with-http_stub_status_module \
-		--with-http_perl_module=dynamic \
 		--with-http_auth_request_module \
 		--with-http_xslt_module=dynamic \
 		--with-http_image_filter_module=dynamic \
@@ -73,7 +72,6 @@ RUN NGINX_GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		libxslt-dev \
 		gd-dev \
 		geoip-dev \
-		perl-dev \
 	&& curl -fSLq https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
 	&& curl -fSLq https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
     && curl -fSLq https://github.com/arut/nginx-rtmp-module/archive/v$RTMP_VERSION.tar.gz -o rtmp.tar.gz \
